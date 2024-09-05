@@ -158,7 +158,7 @@ public class AlarmMatchFunc extends RichFlatMapFunction<MetricMessage, Event> {
             // 更新上次告警时间
             alertTime.update(currentTime);
         } else if (message.getValue() > message.getThresholdUp() && (currentTime - prevAlertTime) > ApplicationConstant.ALARM_INTERVAL) {
-            Event event = Event.builder().metric(message.getMetric()).timestamp(currentTime).description("Metric " + message.getMetric() + " Warning:" + " value: " + message.getValue() + " > " + message.getThresholdDown() + "!").build();
+            Event event = Event.builder().metric(message.getMetric()).timestamp(currentTime).description("Metric " + message.getMetric() + " Warning:" + " value: " + message.getValue() + " > " + message.getThresholdUp() + "!").build();
             // 发出告警信息
             out.collect(event);
             // 更新上次告警时间

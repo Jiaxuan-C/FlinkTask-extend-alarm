@@ -42,8 +42,10 @@ public class AlarmProcess {
         // 标识当前环境
         if (args == null || args.length == 0 || StrUtil.isBlank(args[0])) {
             mark = StaticConstant.ENVIRONMENT_MARK_LOCAL;
+            log.info("+++++++++++++++++++local");
         } else {
             mark = args[0];
+            log.info("+++++++++++++++++++online");
         }
 
         // 应用标识
@@ -71,7 +73,7 @@ public class AlarmProcess {
 
         // 加载数据源
         DataStream<String> stringDataStream = KafkaReadString.readStringStream(env, this.applicationProps, this.mark).rebalance();
-
+        stringDataStream.print();
         // 初始处理,string 转 bean
         SingleOutputStreamOperator<MetricMessage> beanStream = stringDataStream.map(new StringToMessageMapFunction(mark));
 
